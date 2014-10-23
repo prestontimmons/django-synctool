@@ -1,17 +1,36 @@
+import codecs
 from setuptools import setup, find_packages
+from os.path import dirname, join, realpath
 
-DESCRIPTION = """
-A tool to sync querysets between databases.
-"""
+
+ROOT = realpath(dirname(__file__))
+
+
+def read(path):
+    with codecs.open(join(ROOT, path), encoding="utf-8") as f:
+        return f.read()
+
+
+version = __import__("synctool").__version__
 
 
 setup(
     name="django-synctool",
-    version="0.0",
-    description="Sync querysets between databases.",
-    long_description=DESCRIPTION,
+    version=version,
+    url="https://github.com/prestontimmons/django-synctool",
+    description="Sync data between databases.",
+    long_description=read("README.rst"),
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
-    install_requires=[],
+    install_requires=[
+        "Django>=1.7",
+        "mock",
+        "requests",
+    ],
+    classifiers=[
+        "Framework :: Django",
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python",
+    ],
 )
