@@ -8,8 +8,8 @@ from django.test import TestCase
 from django.test.client import RequestFactory
 from django.test.utils import override_settings
 
-import requests
 from mock import patch
+import requests
 
 from .client import Client
 from .functions import get_images, sync_data
@@ -26,7 +26,12 @@ route = Route(api_token="token")
 
 
 def authorization(token="token"):
-    return "Basic %s" % b64encode("%s:" % token)
+    auth = token + ":"
+    try:
+        auth = bytes(auth, encoding="utf-8")
+    except TypeError:
+        pass
+    return "Basic %s" % b64encode(auth)
 
 
 blog_app = route.app("blogs", "synctool")
@@ -63,7 +68,7 @@ class RouteTest(TestCase):
         )
 
         data = deserialize("json", response.content)
-        self.assertEqual(data.next().object, blog)
+        self.assertEqual(next(data).object, blog)
 
     def test_multiple(self):
         blog = Blog.objects.create(slug="blog")
@@ -78,8 +83,8 @@ class RouteTest(TestCase):
 
         data = deserialize("json", response.content)
 
-        self.assertEqual(data.next().object, blog)
-        self.assertEqual(data.next().object, post)
+        self.assertEqual(next(data).object, blog)
+        self.assertEqual(next(data).object, post)
 
     def test_app(self):
         blog = Blog.objects.create(slug="blog")
@@ -98,8 +103,8 @@ class RouteTest(TestCase):
 
         data = deserialize("json", response.content)
 
-        self.assertEqual(data.next().object, blog)
-        self.assertEqual(data.next().object, post)
+        self.assertEqual(next(data).object, blog)
+        self.assertEqual(next(data).object, post)
 
     def test_bad_authorization(self):
         request = RequestFactory().get("/")
@@ -136,7 +141,7 @@ def blog_response():
 
 
 def image_response():
-    with open(IMG) as f:
+    with open(IMG, mode="rb") as f:
         content = f.read()
 
     return Response(
@@ -251,7 +256,7 @@ class GetImagesTest(TestCase):
     @patch.object(requests, "get")
     def test_skip_if_exists(self, get):
         person = Person.objects.create()
-        person.photo.save("photos/img.gif", File(open(IMG)))
+        person.photo.save("photos/img.gif", File(open(IMG, mode="rb")))
         person.save()
 
         get_images(
