@@ -80,6 +80,12 @@ Synctool can be installed from PyPI:
     pip install django-synctool
 
 
+Requirements
+------------
+
+This library requires Django >= 1.7 and either Python 2.7 or Python >= 3.3.
+
+
 Contents
 --------
 

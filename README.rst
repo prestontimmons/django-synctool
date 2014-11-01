@@ -84,3 +84,12 @@ Requirements
 ------------
 
 This library requires Django >= 1.7 and either Python 2.7 or Python >= 3.3.
+
+
+Documentation
+-------------
+
+You can `read the documentation here`_.
+
+
+.. _`read the documentation here`: http://django-synctool.readthedocs.org/en/latest/index.html
