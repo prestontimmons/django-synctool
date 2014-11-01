@@ -20,6 +20,8 @@ setup(
     url="https://github.com/prestontimmons/django-synctool",
     description="Sync data between databases.",
     long_description=read("README.rst"),
+    author="Preston Timmons",
+    author_email="prestontimmons@gmail.com",
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
