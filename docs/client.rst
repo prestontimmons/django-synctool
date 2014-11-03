@@ -48,7 +48,8 @@ to saving the database information. To do this, pass ``images`` argument.
 
     client.sync("<path>", images=True)
 
-When images are synced this way, images will be downloaded for every
+When syncing images, make sure to also pass a ``media_url`` argument to the
+``Client`` class. Images synced this way will be downloaded for every
 ``ImageField`` of every model type in the data returned by the remote url.
 If images already exist locally, the download will be skipped.
 
