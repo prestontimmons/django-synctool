@@ -203,7 +203,7 @@ Including urls
 --------------
 
 The routed url patterns can be included in your project in the same way
-as another other url pattern:
+as other url patterns:
 
 Example:
 
