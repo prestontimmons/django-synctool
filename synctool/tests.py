@@ -4,9 +4,7 @@ import shutil
 
 from django.core.files import File
 from django.core.serializers import deserialize
-from django.test import TestCase
-from django.test.client import RequestFactory
-from django.test.utils import override_settings
+from django.test import RequestFactory, TestCase, mock, override_settings
 
 from mock import patch
 import requests
