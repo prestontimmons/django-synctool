@@ -19,7 +19,7 @@ if not settings.configured:
             },
         },
         ROOT_URLCONF="",
-        SILENCED_SYSTEM_CHECKS = ["1_7.W001"],
+        SILENCED_SYSTEM_CHECKS=["1_7.W001"],
     )
 
     settings.configure(**settings_dict)

@@ -2,7 +2,6 @@ from os import environ
 
 from django.db import models
 
-
 if environ.get("SYNCTOOL_TEST"):
 
     class Blog(models.Model):

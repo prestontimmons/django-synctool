@@ -1,12 +1,11 @@
-from errno import EEXIST
 import os
+from errno import EEXIST
 from os.path import isdir
 
 import requests
-
 from django.apps import apps
-from django.core.serializers import deserialize
 from django.core.management.color import no_style
+from django.core.serializers import deserialize
 from django.db import connection
 from django.db.models import ImageField
 

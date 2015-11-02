@@ -1,7 +1,7 @@
 import codecs
-from setuptools import setup, find_packages
 from os.path import dirname, join, realpath
 
+from setuptools import find_packages, setup
 
 ROOT = realpath(dirname(__file__))
 
