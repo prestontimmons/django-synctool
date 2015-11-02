@@ -11,6 +11,7 @@ from django.test.utils import override_settings
 from mock import patch
 import requests
 
+from .auth import decode_header
 from .client import Client
 from .functions import get_images, sync_data
 from .models import Blog, Category, Person, Post
@@ -286,3 +287,30 @@ class ClientTest(TestCase):
 
         self.assertEqual(Blog.objects.count(), 1)
         self.assertEqual(Category.objects.count(), 1)
+
+
+class DecodeHeaderTest(TestCase):
+
+    def test_decode(self):
+        header = b64encode(b"User:Pass")
+        username, password = decode_header("Basic %s" % header.decode("utf-8"))
+        self.assertEqual(username, "User")
+        self.assertEqual(password, "Pass")
+
+    def test_bad_format(self):
+        header = b64encode(b"User")
+        username, password = decode_header("Basic %s" % header.decode("utf-8"))
+        self.assertEqual(username, None)
+        self.assertEqual(password, None)
+
+    def test_colons(self):
+        header = b64encode(b"User:Pass:Extra")
+        username, password = decode_header("Basic %s" % header.decode("utf-8"))
+        self.assertEqual(username, None)
+        self.assertEqual(password, None)
+
+    def test_not_base64(self):
+        header = "User"
+        username, password = decode_header("Basic %s" % header)
+        self.assertEqual(username, None)
+        self.assertEqual(password, None)
