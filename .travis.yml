@@ -6,4 +6,4 @@ python:
 install:
   - pip install Pillow
 script:
-  - runtests.py
+  - ./runtests.py
